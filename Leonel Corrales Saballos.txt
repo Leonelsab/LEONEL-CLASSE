@@ -1,0 +1,94 @@
+USE MASTER 
+GO
+
+CREATE DATABASE Disparador
+
+USE Disparador
+GO
+
+--EVALUAMOS SI EXISTE LA TABLA CLIENTE
+IF OBJECT_ID('Cliente') IS NOT NULL
+BEGIN
+     DROP TABLE Cliente 
+	 END
+	 GO
+
+--CREAMOS LA TABLA CLIENTE
+CREATE TABLE Cliente(
+Id_Cliente   INT PRIMARY KEY IDENTITY(1,1),
+Nombre          VARCHAR (30) NOT NULL,
+Apellido        VARCHAR (30) NOT NULL,
+Telefono        VARCHAR (8)  NOT NULL,
+Edad            INT          NOT NULL,
+
+)
+GO
+
+--EVALUAMOS SI EXISTE LA TABLA PRODUCTO
+IF OBJECT_ID('Producto') IS NOT NULL
+BEGIN
+     DROP TABLE Producto 
+	 END
+	 GO
+-- creamos la tabla producto
+	 CREATE TABLE Producto ( 
+Id_Producto INT PRIMARY KEY IDENTITY(1,1),
+	Nombre VARCHAR (55),
+	Precio MONEY,
+	fecha_vencimiento DATE,
+	Unidades_Disponibles INT,
+	)
+	GO
+
+--EVALUAMOS SI EXISTE LA TABLA venta
+IF OBJECT_ID('Venta') IS NOT NULL
+BEGIN
+     DROP TABLE Venta 
+	 END
+	 GO
+
+-- creamos la tabla Venta
+	 CREATE TABLE Venta ( 
+Id_venta		INT PRIMARY KEY IDENTITY(1,1),
+ID_Cliente	    int,
+ID_Producto	    int,
+Unidades	    int,
+Monto_Total     MONEY,
+Fecha			DATE,
+	)
+	GO
+
+--EVALUAMOS SI EXISTE LA TABLA venta_Resp
+IF OBJECT_ID('Venta_Resp') IS NOT NULL
+BEGIN
+     DROP TABLE Venta_Resp 
+	 END
+	 GO
+
+-- creamos la tabla Venta_Resp
+	 CREATE TABLE Venta_resp ( 
+Id_venta		INT PRIMARY KEY IDENTITY(1,1),
+ID_Cliente	    int,
+ID_Producto	    int,
+Unidades	    int,
+Monto_Total     MONEY,
+Fecha			DATE,
+	)
+	GO
+
+CREATE TRIGGER T_Monto_Total
+ON Venta 
+AFTER INSERT 
+AS 
+BEGIN
+     IF (SELECT Monto_Total FROM INSERTED)<=0
+	       BEGIN
+	       ROLLBACK TRANSACTION 
+		   PRINT 'No puede registrar un monto menor o igual a cero'
+           END
+     ELSE 
+	    INSERT Venta_Resp SELECT * FROM inserted
+	    PRINT 'Monto registrado correctamente'
+
+     END
+     GO

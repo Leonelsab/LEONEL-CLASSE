@@ -1,0 +1,73 @@
+CREATE DATABASE Persona
+GO
+
+USE Persona 
+GO
+
+		IF OBJECT_ID('Persona') IS NOT NULL
+	BEGIN 
+DROP TABLE Persona
+	END 
+GO
+
+CREATE TABLE Persona(
+Id_Persona	INT PRIMARY KEY IDENTITY (1,1),
+Nombre		VARCHAR (30) NOT NULL,
+Fecha_Naci	DATE NOT NULL,
+Edad		TINYINT NOT NULL,
+Correo		VARCHAR (65) NOT NULL,
+Genero		VARCHAR (1) NOT NULL
+)
+GO
+
+		IF OBJECT_ID ('Mayor_Edad') IS NOT NULL 
+	BEGIN 
+DROP TRIGGER Mayor_Edad
+	END
+
+GO
+--Creado para Agregar
+CREATE TRIGGER Mayor_Edad 
+
+ON Persona
+	AFTER INSERT 
+AS
+	BEGIN
+
+IF (SELECT Edad FROM INSERTED) >18
+	BEGIN 
+		PRINT '¡Edad insertada Correctamente!'
+	END 
+		ELSE 
+	BEGIN 
+
+	ROLLBACK
+
+		PRINT '¡Edad no Admitida!'
+	END
+END
+GO
+--Creado para eliminar 
+CREATE TRIGGER Regist_Eliminad
+ON Persona 
+	FOR DELETE
+AS
+	BEGIN 
+PRINT '¡Registro Eliminado Exitosamente!'
+END
+GO
+
+INSERT INTO Persona VALUES ('Leonel Corrales', '2001-09-13', 19, 'leonelsaballos999@gmail.com', 'M')
+Go
+INSERT INTO Persona VALUES ('Leonel Corrales', '2000-09-30', 9, 'leonelsaballos999@gmail.com', 'M')
+GO
+INSERT INTO Persona VALUES ('Maria', '2001-09-22', 16, 'mariaaragon123@gmail.com', 'j')
+GO
+INSERT INTO Persona VALUES ('Leonel Corrales', '2001-09-21', 20, 'leonelsaballos999@gmail.com', 'M')
+SELECT *FROM Persona 
+GO
+
+DELETE FROM Persona 
+GO
+SELECT * FROM Persona
+

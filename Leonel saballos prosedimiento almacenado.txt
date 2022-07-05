@@ -1,0 +1,142 @@
+USE MASTER
+GO
+
+CREATE DATABASE Proc1
+
+USE  Proc_Alm_1
+GO
+
+
+IF OBJECT_ID('Cliente') IS NOT NULL
+BEGIN
+	DROP TABLE Cliente
+END
+GO
+
+CREATE TABLE Cliente ( 
+ID_Cliente INT PRIMARY KEY IDENTITY (1,1),
+	Nombre_cliente     VARCHAR (50),
+	Apellido_cliente   VARCHAR (50),
+	Fecha_nac          DATE,	
+	)
+
+
+IF OBJECT_ID('Produc') IS NOT NULL
+BEGIN
+	DROP TABLE Producto
+END
+GO
+
+CREATE TABLE Produc( 
+ID_Producto INT PRIMARY KEY IDENTITY (1,1),
+	Nombre_Producto     VARCHAR (50),
+    Precio              INT,
+	Unid_almc           INT,	
+	)
+
+
+
+IF OBJECT_ID('Ventas') IS NOT NULL
+BEGIN
+	DROP TABLE Ventas
+END
+GO
+
+ CREATE TABLE Venta ( 
+ID_Venta      INT PRIMARY KEY IDENTITY (1,1),
+ID_cliente     INT,
+ID_Producto    INT,
+Cantidad       INT,
+Monto_total    MONEY,
+Fecha          DATE,
+Hora           TIME,
+	)	
+
+
+IF OBJECT_ID('Proc_Inser') IS NOT NULL
+BEGIN
+	DROP PROCEDURE Proc_Insertar
+END
+GO
+CREATE PROCEDURE Proc_Insertar
+@Nombre_cliente     VARCHAR (50),
+@Apellido_cliente   VARCHAR (50),
+@Fecha_nac          DATE
+AS
+BEGIN
+   INSERT INTO Cliente VALUES (@Nombre_cliente,@Apellido_cliente,@Fecha_nac)
+   END
+   GO
+
+
+
+IF OBJECT_ID('Proc_Actualiza') IS NOT NULL
+BEGIN
+	DROP PROCEDURE Proc_Actualizar
+END
+GO
+CREATE PROCEDURE Proc_Actualiza
+@Nombre_Producto     VARCHAR (50),
+@Precio              INT
+AS
+BEGIN
+UPDATE Produc
+   SET Nombre_Producto= @Nombre_Producto, Precio= @Precio
+   WHERE ID_Producto= 1
+   END
+   GO
+
+IF OBJECT_ID('Proc_Eliminar') IS NOT NULL
+BEGIN
+	DROP PROCEDURE Proc_Eliminar
+END
+GO
+
+CREATE PROCEDURE Proc_Eliminar
+@Cantidad       INT
+AS
+  BEGIN
+     DELETE FROM Venta
+     WHERE       Cantidad= @Cantidad
+  END
+GO
+
+
+
+INSERT INTO Cliente VALUES ('Bismarck','Lopez','2003-05-17')
+INSERT INTO Cliente VALUES ('Dayana','Mejia','2004-03-07')
+INSERT INTO Cliente VALUES ('Jaramio','Viachica','2000-12-09')
+INSERT INTO Cliente VALUES ('Daniel','Murillo','2002-10-22')
+INSERT INTO Cliente VALUES ('Yandel','Duarte','2002-05-28')
+
+INSERT INTO Producto VALUES ('frijoles',15,3)
+INSERT INTO Producto VALUES ('Azucar',90,2)
+INSERT INTO Producto VALUES ('narajas',45,4)
+INSERT INTO Producto VALUES ('sebolla',20,3)
+INSERT INTO Producto VALUES ('repollo',30,2)
+
+INSERT INTO Ventas VALUES (1,1,3,45,'2022-10-22','09:35:04')
+INSERT INTO Ventas VALUES (3,2,3,180,'2022-12-01','11:15:05')
+INSERT INTO Ventas VALUES (2,3,3,245,'2022-10-20','14:22:02')
+INSERT INTO Ventas VALUES (4,4,5,100,'2022-10-17','08:15:05')
+INSERT INTO Ventas VALUES (5,5,4,120,'2022-10-30','16:45:09')
+
+
+--ejecutamos primer proc_almacenado 
+EXECUTE Proc_Insertar'Anita', 'Duarte', '1095-06-12';
+EXECUTE Proc_Insertar'Aurora', 'Mejia', '1085-08-06';
+EXECUTE Proc_Insertar'Damaris', 'Mejia', '1098-11-14';
+
+SELECT * FROM Cliente
+
+EXECUTE Proc_Actualizar 'piña', 20;
+EXECUTE Proc_Actualizar 'chiltoma', 15;
+EXECUTE Proc_Actualizar 'azucar', 25;
+
+SELECT * FROM Produc
+
+EXECUTE Proc_Eliminar 4;
+EXECUTE Proc_Eliminar 5;
+
+
+SELECT * FROM Venta

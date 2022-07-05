@@ -1,0 +1,327 @@
+INSERT INTO Vendedor(
+Nombre ,
+Apellido ,
+Telefono
+)
+
+INSERT INTO Vendedor(
+Nombre ,
+Apellido ,
+Telefono
+)
+
+INSERT INTO Vendedor(
+Nombre ,
+Apellido ,
+Telefono
+)
+
+INSERT INTO Vendedor(
+Nombre ,
+Apellido ,
+Telefono
+)
+
+INSERT INTO Vendedor(
+Nombre ,
+Apellido ,
+Telefono
+)
+
+INSERT INTO Vendedor(
+Nombre ,
+Apellido ,
+Telefono
+)
+
+INSERT INTO Vendedor(
+Nombre ,
+Apellido ,
+Telefono
+)
+
+INSERT INTO Vendedor(
+Nombre ,
+Apellido ,
+Telefono
+)
+
+INSERT INTO Vendedor(
+Nombre ,
+Apellido ,
+Telefono
+)
+
+INSERT INTO Cliente(
+Nombre,
+Apellido,
+Telefono,
+Direcion
+)
+
+ALTER TABLE Cliente ALTER COLUMN Direcion VARCHAR (30)
+
+INSERT INTO Cliente(
+Nombre,
+Apellido,
+Telefono,
+Direcion
+)
+
+INSERT INTO Cliente(
+Nombre,
+Apellido,
+Telefono,
+Direcion
+)
+
+INSERT INTO Cliente(
+Nombre,
+Apellido,
+Telefono,
+Direcion
+)
+
+INSERT INTO Cliente(
+Nombre,
+Apellido,
+Telefono,
+Direcion
+)
+
+INSERT INTO Cliente(
+Nombre,
+Apellido,
+Telefono,
+Direcion
+)
+
+INSERT INTO Cliente(
+Nombre,
+Apellido,
+Telefono,
+Direcion
+)
+
+INSERT INTO Cliente(
+Nombre,
+Apellido,
+Telefono,
+Direcion
+)
+
+INSERT INTO Cliente(
+Nombre,
+Apellido,
+Telefono,
+Direcion
+)
+
+INSERT INTO Cliente(
+Nombre,
+Apellido,
+Telefono,
+Direcion
+)
+
+SELECT* FROM Cliente
+
+INSERT INTO Factura(
+Numero_Produto,
+Monto_Total,
+Fecha,
+ID_Cliente,
+ID_Vendedor
+)
+
+INSERT INTO Factura(
+Numero_Produto,
+Monto_Total,
+Fecha,
+ID_Cliente,
+ID_Vendedor
+)
+
+INSERT INTO Factura(
+Numero_Produto,
+Monto_Total,
+Fecha,
+ID_Cliente,
+ID_Vendedor
+)
+
+INSERT INTO Factura(
+Numero_Produto,
+Monto_Total,
+Fecha,
+ID_Cliente,
+ID_Vendedor
+)
+
+INSERT INTO Factura(
+Numero_Produto,
+Monto_Total,
+Fecha,
+ID_Cliente,
+ID_Vendedor
+)
+
+INSERT INTO Factura(
+Numero_Produto,
+Monto_Total,
+Fecha,
+ID_Cliente,
+ID_Vendedor
+)
+
+INSERT INTO Factura(
+Numero_Produto,
+Monto_Total,
+Fecha,
+ID_Cliente,
+ID_Vendedor
+)
+
+INSERT INTO Factura(
+Numero_Produto,
+Monto_Total,
+Fecha,
+ID_Cliente,
+ID_Vendedor
+)
+
+INSERT INTO Factura(
+Numero_Produto,
+Monto_Total,
+Fecha,
+ID_Cliente,
+ID_Vendedor
+)
+
+INSERT INTO Factura(
+Numero_Produto,
+Monto_Total,
+Fecha,
+ID_Cliente,
+ID_Vendedor
+)
+
+SELECT * FROM Factura
+
+INSERT INTO Bicicleta(
+ID_Bicicleta,
+ID_Cliente,
+Color,
+Marca
+)
+
+INSERT INTO Bicicleta(
+ID_Bicicleta,
+ID_Cliente,
+Color,
+Marca
+)
+
+INSERT INTO Bicicleta(
+ID_Bicicleta,
+ID_Cliente,
+Color,
+Marca
+)
+
+INSERT INTO Bicicleta(
+ID_Bicicleta,
+ID_Cliente,
+Color,
+Marca
+)
+
+INSERT INTO Bicicleta(
+ID_Bicicleta,
+ID_Cliente,
+Color,
+Marca
+)
+
+
+INSERT INTO Bicicleta(
+ID_Bicicleta,
+ID_Cliente,
+Color,
+Marca
+)
+
+INSERT INTO Bicicleta(
+ID_Bicicleta,
+ID_Cliente,
+Color,
+Marca
+)
+
+INSERT INTO Bicicleta(
+ID_Bicicleta,
+ID_Cliente,
+Color,
+Marca
+)
+
+INSERT INTO Bicicleta(
+ID_Bicicleta,
+ID_Cliente,
+Color,
+Marca
+)
+
+INSERT INTO Bicicleta(
+ID_Bicicleta,
+ID_Cliente,
+Color,
+Marca
+)
+
+SELECT * FROM Bicicleta
+
+
+
+
+
+TABLE Vendedor {
+ID_Vendedor INT [PK]
+Nombre VARCHAR
+Apellido VARCHAR
+Telefono VARCHAR
+}
+
+TABLE Factura {
+ID_Factuta INT [PK]
+Numero_Produto INT 
+Monto_Total MONEY
+Fecha DATE
+ID_Cliente INT
+ID_Vendedor INT 
+
+}
+
+TABLE Cliente {
+ID_Cliente INT [PK]
+Nombre VARCHAR
+Apellido VARCHAR
+Telefono VARCHAR
+Direcion VARCHAR
+ID_Factuta VARCHAR
+}
+
+TABLE Bicicleta{
+ID_Bicicleta INT [PK]
+ID_Cliente INT
+Color VARCHAR
+Marca VARCHAR
+}
+
+
+Ref: "Vendedor"."ID_Vendedor" < "Factura"."ID_Vendedor"
+
+Ref: "Factura"."ID_Cliente" < "Cliente"."ID_Cliente"
+
+Ref: "Cliente"."ID_Cliente" < "Bicicleta"."ID_Cliente"
+
