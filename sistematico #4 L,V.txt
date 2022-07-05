@@ -1,0 +1,303 @@
+USE Northwind;
+GO
+
+
+
+--1
+CREATE PROCEDURE proseso1
+	@OrderID	INT
+AS
+	BEGIN
+		SELECT OrderID, ProductID, UnitPrice
+		FROM [Order Details]
+		WHERE OrderID=@OrderID
+	END
+GO
+EXECUTE proseso1 10251
+
+--2
+CREATE PROCEDURE proseso2
+	@CompanyName	VARCHAR(60)
+AS
+	BEGIN
+		SELECT CompanyName
+		FROM Customers
+		WHERE CompanyName=@CompanyName
+	END
+GO
+EXECUTE proseso2 'Alfreds Futterkiste'
+
+--3
+CREATE PROCEDURE proseso3
+	@OrderID	INT,
+	@ProductID	INT
+AS
+	BEGIN
+		SELECT OrderID, ProductID, UnitPrice
+		FROM [Order Details]
+		WHERE OrderID=@OrderID AND ProductID=@ProductID
+	END
+GO
+EXECUTE proseso3 10251,57
+
+--4
+CREATE PROCEDURE proseso4
+	@OrderID	INT,
+	@ProductID	INT
+AS
+	BEGIN
+		SELECT OrderID, ProductID, UnitPrice
+		FROM [Order Details]
+		WHERE OrderID=@OrderID OR ProductID=@ProductID
+	END
+GO
+EXECUTE proceso4 10251,57
+
+--5
+CREATE PROCEDURE proceso
+	@OrderID	INT
+
+AS
+	BEGIN
+		IF  @OrderID>=11000
+			SELECT OrderID, ProductID, UnitPrice
+			FROM [Order Details]
+			WHERE OrderID>=11000
+		ELSE
+			PRINT 'El Id de Order debe ser mayor a 11000'
+		
+	END
+GO
+DROP PROCEDURE proceso5
+EXECUTE proceso5 11000
+
+--6
+CREATE PROCEDURE proceso6
+	@OrderID	INT,
+	@OrderID2	INT
+AS
+	BEGIN
+		IF @OrderID>=11000 AND @OrderID2<=11003
+		SELECT OrderID, ProductID, UnitPrice
+		FROM [Order Details]
+		WHERE OrderID>=11000 AND OrderID<=11003
+	ELSE
+		PRINT 'El registros deberia estar entre 11000 y 11003'
+	END
+GO
+
+EXECUTE proceso6 11000, 11003
+
+--7
+CREATE PROCEDURE proceso7
+	@OrderID	INT,
+	@OrderID2	INT
+AS
+	BEGIN
+		IF @OrderID>=11000 AND @OrderID2<=11003
+		SELECT OrderID, ProductID, UnitPrice
+		FROM [Order Details]
+		WHERE OrderID BETWEEN 11000 AND 11003
+	ELSE
+		PRINT 'Los registros deben estar entre 11000 y 11003'
+	END
+GO
+EXECUTE proceso7 11000,1003
+
+--8
+CREATE PROCEDURE proceso8
+	@CompanyName	VARCHAR(1)
+AS
+	BEGIN
+		IF @CompanyName='A'
+		SELECT CompanyName FROM Customers
+		WHERE CompanyName LIKE 'A%' 
+	END
+GO
+
+EXECUTE proceso8 'A'
+
+--9
+CREATE PROCEDURE proceso9
+	@CompanyName	VARCHAR(2)
+AS
+	BEGIN
+		IF @CompanyName='MA'
+		SELECT CompanyName FROM Customers
+		WHERE CompanyName LIKE 'MA%' 
+	END
+GO
+EXECUTE proceso9 'MA'
+
+--10
+CREATE PROCEDURE proceso10
+	@RegionDescription	VARCHAR(4)
+AS
+	BEGIN
+		IF @RegionDescription='TERN'
+		SELECT RegionDescription FROM Region
+		WHERE RegionDescription LIKE '%TERN%' 
+	END
+GO
+EXECUTE proceso10 'TERN'
+
+--11
+CREATE PROCEDURE proceso11
+	@OrderID	VARCHAR(7)
+AS
+	BEGIN
+		IF @OrderID='_0285'
+		SELECT OrderID FROM [Order Details]
+		WHERE OrderID LIKE '_0285' 
+	END
+GO
+EXECUTE proceso11 '_0285'
+
+--12
+CREATE PROCEDURE proceso12
+  CompanyName VARCHAR(3)
+  
+  AS
+	BEGIN
+		IF @CompanyName='[a-c]'
+		SELECT CompanyName FROM Customers
+		WHERE CompanyName LIKE '[a-c]%' 
+	END
+GO
+EXECUTE proceso12 '[a-c]'
+
+--13
+CREATE PROCEDURE proceso13
+	@OrderID	INT
+AS
+	BEGIN
+		IF @OrderID IN (10248,10255,10270)
+		SELECT *FROM [Order Details]
+		WHERE OrderID IN (10248, 10255, 10270)
+	END
+GO
+EXECUTE proceso13 10248
+
+
+
+--14
+CREATE PROCEDURE proceso14
+	@OrderID	INT
+AS
+	BEGIN
+		IF @OrderID=10248 OR @OrderID=10255 OR @OrderID=10270
+		SELECT *FROM [Order Details]
+		WHERE OrderID=10248 OR OrderID=10255 OR OrderID=10270
+	END
+GO
+EXECUTE proceso14 10255
+
+--15
+CREATE PROCEDURE proceso15
+	@CatergoryName	VARCHAR(5)
+AS
+	BEGIN
+		SELECT CategoryName, CategoryID FROM Categories
+		WHERE CategoryName= @CatergoryName
+		ORDER BY CategoryName ASC
+	END
+GO
+EXECUTE proceso15 'solucion'
+
+--16
+CREATE PROCEDURE proceso16
+	@CatergoryName	VARCHAR(30)
+AS
+	BEGIN
+		SELECT CategoryName, CategoryID FROM Categories
+		WHERE CategoryName= @CatergoryName
+		ORDER BY CategoryName 
+	END
+GO
+EXECUTE proceso16 'solucion'
+
+--17
+CREATE PROCEDURE proceso17
+	@CatergoryName	VARCHAR(70)
+AS
+	BEGIN
+		SELECT CategoryName, CategoryID FROM Categories
+		WHERE CategoryName= @CatergoryName
+		ORDER BY CategoryName DESC
+	END
+GO
+EXECUTE proceso17'solucion'
+
+--18
+CREATE PROCEDURE proceso18
+	@Lastname	VARCHAR(1)
+AS
+	BEGIN
+		IF @Lastname LIKE 'D%'
+			SELECT EmployeeID, LastName FROM Employees
+			WHERE LastName LIKE 'D%'
+		ELSE
+			PRINT 'Presionar la letra D'
+	END
+GO
+EXECUTE proceso17 'D'
+
+--19
+CREATE PROCEDURE proceso19
+	@Lastname	VARCHAR(1)
+AS
+	BEGIN
+		IF @Lastname = 'N'
+			SELECT EmployeeID, LastName FROM Employees
+			WHERE LastName LIKE '%N'
+		ELSE
+			PRINT 'Presionar la letra N'
+	END
+GO
+EXECUTE proceso19 'N'
+
+--20
+CREATE PROCEDURE proces20
+	@title	VARCHAR(40)
+AS
+	BEGIN
+		IF @title LIKE '%SALES%'
+			SELECT EmployeeID, LastName, title FROM Employees
+			WHERE Title LIKE '%SALES%'
+		ELSE
+			PRINT 'Digita SALES'
+	END
+GO
+EXECUTE proceso20 'SALES'
+
+--21
+CREATE PROCEDURE proceso21
+	@title	VARCHAR(25)
+AS
+	BEGIN
+		IF @title LIKE '%REPRESENTATIVE%'
+			SELECT EmployeeID, LastName, title FROM Employees
+			WHERE Title LIKE '%REPRESENTATIVE%'
+		ELSE
+			PRINT 'Digita REPRESENTATIVE'
+	END
+GO
+EXECUTE proceso21 'REPRESENTATIVE'
+
+--22
+CREATE PROCEDURE proceso22
+	@OrderID	VARCHAR(4)
+AS
+	BEGIN
+		IF @OrderID LIKE '_0248'
+			SELECT OrderID FROM [Order Details]
+			WHERE OrderID LIKE '_0248'
+	END
+GO
+EXECUTE proceso22 '_0248'
+
+--Leonel Felipe Corrales Saballos
+--Velky Jordania Aguilar
+
+
+	
